@@ -26,9 +26,15 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
+    group_size = serializers.SerializerMethodField()
+
     class Meta:
         model = Group
-        fields = ["id", "name", "location"]
+        fields = ["id", "name", "location", "group_size"]
+
+    def get_group_size(self, obj):
+        """Return number of users in group."""
+        return obj.groupusers_set.count()
 
 
 class GroupusersSerializer(serializers.ModelSerializer):
