@@ -1,7 +1,12 @@
 from django.contrib.auth.models import User
 from rest_framework import status
 from studymatch.serializers import UserSerializer, CreateUserSerializer
-from rest_framework.generics import RetrieveAPIView, CreateAPIView, get_object_or_404
+from rest_framework.generics import (
+    RetrieveAPIView,
+    CreateAPIView,
+    get_object_or_404,
+    ListAPIView,
+)
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
@@ -60,3 +65,17 @@ class JoinGroupView(CreateAPIView):
         return Response(
             {"detail": "You have successfully joined the group"},
         )
+
+
+class UserGroupListView(ListAPIView):
+    serializer_class = GroupSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Group.objects.filter(groupusers__user=user)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
