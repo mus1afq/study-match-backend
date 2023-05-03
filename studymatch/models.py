@@ -9,6 +9,7 @@ class Group(models.Model):
     creator = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="groups_created"
     )
+    group_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.name
