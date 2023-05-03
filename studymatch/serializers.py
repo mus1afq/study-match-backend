@@ -30,7 +30,7 @@ class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ["id", "name", "location", "group_size"]
+        fields = ["id", "name", "location", "group_date", "group_size"]
 
     def get_group_size(self, obj):
         """Return number of users in group."""
