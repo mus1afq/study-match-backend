@@ -13,4 +13,9 @@ urlpatterns = [
         views.CreateGroupView.as_view(),
         name="create_group",
     ),
+    path(
+        "join/group/<int:group_id>/",
+        views.JoinGroupView.as_view(),
+        name="join_group",
+    ),
 ]
