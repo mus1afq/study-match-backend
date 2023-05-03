@@ -23,4 +23,9 @@ urlpatterns = [
         views.UserGroupListView.as_view(),
         name="user_groups",
     ),
+    path(
+        "groups/",
+        views.GroupsListView.as_view(),
+        name="groups",
+    ),
 ]

@@ -79,3 +79,23 @@ class UserGroupListView(ListAPIView):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class GroupsListView(ListAPIView):
+    """
+    API view to list all groups that the user is not a member of
+    and allow the user to join them.
+    """
+
+    serializer_class = GroupSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        """
+        Get the IDs of the groups that the user is already a member of and
+        exclude them from the queryset.
+        """
+        user = self.request.user
+        user_group_ids = user.groupusers_set.values_list("group__id", flat=True)
+        queryset = Group.objects.exclude(id__in=user_group_ids)
+        return queryset
