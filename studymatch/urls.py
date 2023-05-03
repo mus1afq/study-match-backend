@@ -8,4 +8,9 @@ urlpatterns = [
         views.CreateUserDetail.as_view(),
         name="Createuser_detail",
     ),
+    path(
+        "create/group/",
+        views.CreateGroupView.as_view(),
+        name="create_group",
+    ),
 ]
