@@ -34,8 +34,9 @@ class CreateGroupView(CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        """Set the group's creator to the logged in user."""
-        serializer.save(creator=self.request.user)
+        """Set the group's creator to the logged in user and add the user to the group."""
+        group = serializer.save(creator=self.request.user)
+        Groupusers.objects.create(user=self.request.user, group=group)
 
 
 class JoinGroupView(CreateAPIView):
