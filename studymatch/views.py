@@ -1,15 +1,29 @@
+# The default Django User model.
 from django.contrib.auth.models import User
+
+# A module that provides HTTP status codes as named integers to use in API responses, like 200, 404, 500 etc.
 from rest_framework import status
+
+# Refers to the serializers module in the studymatch Django application directory
+# containing classes that serialize and deserialize Django models into JSON objects.
 from studymatch.serializers import UserSerializer, CreateUserSerializer
+
+# A module that provides generic views for common use cases, such as retrieving a single object, creating an object, listing objects, etc.
+
 from rest_framework.generics import (
     RetrieveAPIView,
     CreateAPIView,
     get_object_or_404,
     ListAPIView,
 )
+
+# A module that provides permissions classes to control who can access the API endpoints.
 from rest_framework.permissions import IsAuthenticated, AllowAny
+
+# A module that provides response objects to return from API views.
 from rest_framework.response import Response
 
+# Refers to the models module in the studymatch Django application directory, which defines database models for the application.
 from studymatch.models import Group, Groupusers
 from studymatch.serializers import GroupSerializer, GroupusersSerializer
 
@@ -21,6 +35,7 @@ class UserDetail(RetrieveAPIView):
 
 
 class CreateUserDetail(CreateAPIView):
+    # API view to create User.
     queryset = User.objects.all()
     serializer_class = CreateUserSerializer
     permission_classes = [AllowAny]
